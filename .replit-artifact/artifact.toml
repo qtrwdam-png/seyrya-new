@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "نعم لمواد البناء"
+description = "متجر عربي لمواد البناء والتشطيبات، مستوحى من تجربة سوق مواد البناء ويقدم تصفح الفئات والمنتجات والبحث والسلة."
+version = "1.0.0"
+id = "artifacts/naem-materials"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25391
+
+[services.development]
+run = "pnpm --filter @workspace/naem-materials run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/naem-materials", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/naem-materials/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25391"
+BASE_PATH = "/"
